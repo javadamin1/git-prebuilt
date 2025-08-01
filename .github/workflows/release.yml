@@ -1,0 +1,32 @@
+name: Git Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Make script executable
+        run: chmod +x build.sh
+
+      - name: Extract version from tag
+        id: vars
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build binaries
+        run: ./build.sh ${{ steps.vars.outputs.VERSION }}
+
+      - name: Create GitHub Release and upload artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/git-${{ steps.vars.outputs.VERSION }}-ubuntu.tar.gz
+            artifacts/git-${{ steps.vars.outputs.VERSION }}-debian.tar.gz
+            artifacts/git-${{ steps.vars.outputs.VERSION }}-rocky8.tar.gz
