@@ -1,6 +1,7 @@
 FROM ubuntu:20.04
 
-ARG GIT_VERSION=2.44.0
+ARG GIT_VERSION
+ARG DOWNLOAD_URL
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -9,7 +10,8 @@ RUN apt-get update && \
     apt-get clean
 
 WORKDIR /build
-RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz && \
+
+RUN wget "$DOWNLOAD_URL" && \
     tar -xzf git-${GIT_VERSION}.tar.gz && \
     cd git-${GIT_VERSION} && \
     make prefix=/opt/git install

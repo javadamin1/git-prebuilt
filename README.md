@@ -8,8 +8,8 @@ All builds are published in the [Releases](https://github.com/YOUR_USERNAME/git-
 
 Example assets:
 - `git-2.44.0-ubuntu.tar.gz`
-- `git-2.44.0-centos7.tar.gz`
-- `git-2.44.0-alpine.tar.gz`
+- `git-2.44.0-debian.tar.gz`
+- `git-2.44.0-rocky.tar.gz`
 
 ---
 
@@ -28,8 +28,7 @@ Artifacts will be saved in the `artifacts/` directory.
 ## 📦 Dockerfiles
 
 - `Dockerfile.ubuntu` → Ubuntu 20.04 build
-- `Dockerfile.centos7` → CentOS 7 build
-- `Dockerfile.alpine` → Alpine Linux build
+- `Dockerfile.rocky` → Rocky 8 build
 
 You can also build individually:
 

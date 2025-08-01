@@ -1,6 +1,9 @@
 FROM rockylinux:8
 
-ARG GIT_VERSION=2.44.0
+ARG GIT_VERSION
+ARG DOWNLOAD_URL
+
+
 WORKDIR /build
 RUN dnf install -y ca-certificates && update-ca-trust
 
@@ -22,13 +25,13 @@ RUN dnf install -y \
 
 RUN rm -f git-${GIT_VERSION}.tar.gz
 
-RUN curl -LO https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz && ls -l git-${GIT_VERSION}.tar.gz && \
+RUN curl -LO "$DOWNLOAD_URL" && \
     tar -xzf git-${GIT_VERSION}.tar.gz && \
     cd git-${GIT_VERSION} && \
     make prefix=/git install
 
-RUN tar -czf /git-${GIT_VERSION}-rocky8.tar.gz -C /git .
+RUN tar -czf /git-${GIT_VERSION}-rocky.tar.gz -C /git .
 
 RUN rm -rf /build/*
 
-CMD ["ls", "-lh", "/git-${GIT_VERSION}-rocky8.tar.gz"]
+CMD ["ls", "-lh", "/git-${GIT_VERSION}-rocky.tar.gz"]
